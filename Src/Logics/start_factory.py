@@ -6,7 +6,8 @@ from Src.Storage.storage import storage
 from Src.exceptions import exception_proxy, argument_exception
 from Src.reference import reference
 from Src.Models.receipe_row_model import receipe_model
-
+import os
+import json
 #
 # Класс для обработки данных. Начало работы приложения
 #
@@ -164,7 +165,7 @@ class start_factory:
         
         return result
     
-    @classmethod
+    @staticmethod
     def create_unit(list):
         diction = {}
         for i in list:
@@ -173,25 +174,43 @@ class start_factory:
             else:
                 diction[i.unit.name] = [i]
     
-    @classmethod
+    @staticmethod
     def create_group(list):
         diction = {}
         for i in list:
-            if i.unit.group in diction.keys():
-                diction[i.unit.group].append(i)
+            if i.group.name in diction.keys():
+                diction[i.group.name].append(i)
             else:
-                diction[i.unit.group] = [i]
+                diction[i.group.name] = [i]
+        return diction 
 
-    @classmethod
-    def create_receipts(self):
+    def create_receipts(self, path):
             receipt = []
-            if storage.nomenclature_key() in self.__storage.data.keys():
-                    #
-                    #
-                    #
-                    #
-                    item = receipe_model(_nomenclature=i.name, _size = "из жсона", _unit=i.unit.name)
-                    receipt.append(item)
+            file_path = os.path.split(__file__)
+            json_file = "%s/%s" % (file_path[0], path)
+            if not os.path.exists(json_file):
+                raise Exception("ERROR: Json_file %s", json_file)
+            file_json = json.load(json_file)
+            
+            for i in file_json:
+                name_of_object=i["name"]
+                try:
+                    curr_object=self.__storage.data[storage.names_key()][name_of_object]
+                except:
+                    raise (Exception("Такого объекта не существует"))
+                one_ingredient = receipe_model(curr_object, i['size'], curr_object.unit)
+                receipt.append(one_ingredient)
+                
+            return receipt
+     
+    def create_names(list):
+        list_names = {}
+        for i in list:
+            if i.name in list.keys():
+                list[i.name].append(i)
+            else:
+               list[i.name] = [i]
+        return list 
 
 
     def create(self):
@@ -208,12 +227,21 @@ class start_factory:
             
             # Формируем и зпоминаем номеклатуру
             result = start_factory.create_nomenclature()
-            self.__save( storage.nomenclature_key(), result )
+            self.__save(storage.nomenclature_key(), result)
             unit = start_factory.create_unit(result)
             self.__save(storage.unit_key(), unit)
             group = start_factory.create_group(result)
             self.__save(storage.group_key(), group)
-            receipts = self.create_receipts()
+            names = start_factory.create_names(result)
+            self.__save(storage.names_key(), names) 
+            receipts = self.create_receipts("../../json_files/receipt.json")
+            receipts_1 = self.create_receipts("../../json_files/receipt1.json")
+            receipts_2 = self.create_receipts("../../json_files/receipt2.json")
+            self.__save(storage.receipt_key(), receipts)
+            self.__save(storage.receipt_key(), receipts_1)
+            self.__save(storage.receipt_key(), receipts_2)
+
+
 
 
         return result
