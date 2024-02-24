@@ -55,6 +55,24 @@ class factory_test(unittest.TestCase):
             assert storage.nomenclature_key in factory.storage.data
         
         assert len(result) == 0   
+
+    #
+    # Проверка наличия данных
+    #
+    def test_check_nomenclature(self):
+        # Подготовка
+        manager = settings_manager()
+        factory = start_factory( manager.settings )
+
+        # Действие
+        result = factory.create()
+
+        # Проверка
+        if manager.settings.is_first_start == False:
+            assert len(factory.storage.data[storage.nomenclature_key()]) != 0
+            assert len(factory.storage.data[storage.unit_key()]) != 0 
+            assert len(factory.storage.data[storage.group_key()]) != 0
+            assert len(factory.storage.data[storage.receipt_key()]) != 0   
                      
         
        
