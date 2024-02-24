@@ -59,3 +59,13 @@ class storage:
             _type_: _description_
         """
         return "receipt"
+    @staticmethod
+    def name_key():
+        """
+            Ключ для хранения имен
+        Returns:
+            _type_: _description_
+        """
+        return "name"
+    
+    
