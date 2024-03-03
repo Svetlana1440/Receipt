@@ -3,6 +3,9 @@ from Src.reference import reference
 
 class csv_reporting(reporting):
     def create(self, TypeKey: str):
+        """
+        Функция возвращает csv строку
+        """
         super().create(TypeKey)
 
         result = ""
@@ -19,6 +22,9 @@ class csv_reporting(reporting):
         return result 
     @staticmethod
     def __csv__create(fields, items):
+        """
+        Функция формирует csv строку
+        """
         result = ""
         for item in items:
             list = []
