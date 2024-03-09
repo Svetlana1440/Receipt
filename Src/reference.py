@@ -17,7 +17,7 @@ class reference(ABC):
     _error = error_proxy()
     
     def __init__(self, name):
-        _id = uuid.uuid4()
+        self._id = uuid.uuid4()
         self.name = name
     
     @property
@@ -42,16 +42,38 @@ class reference(ABC):
         exception_proxy.validate( value.strip(), str)
         self._description = value.strip()
         
-        
     @property
     def id(self):
         " Уникальный код записи "
-        return self._id  
+        return str(self._id.hex)  
 
     @property
     def is_error(self):
         " Флаг. Есть ошибка "
-        return self._error.error != ""     
+        return self._error.error != ""  
+    
+    @staticmethod
+    def create_dictionary(items: list):
+        """
+            Сформировать словарь из списка элементов reference 
+        Args:
+            items (list): _description_
+        """
+        exception_proxy.validate(items, list)
+        
+        result = {}
+        for position in items:
+            result[ position.name ] = position
+           
+        return result   
+    
+    def __str__(self) -> str:
+        """
+            Изменим строковое представление класса
+        Returns:
+            str: _description_
+        """
+        return self.id
     
     
                 

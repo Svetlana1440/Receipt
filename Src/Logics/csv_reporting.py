@@ -1,14 +1,41 @@
 from Src.Logics.reporting import reporting
-from Src.reference import reference
+from Src.exceptions import operation_exception
 
+
+#
+# Класс - реализация построение данных в формате csv
+#
 class csv_reporting(reporting):
+<<<<<<< HEAD
+    
+    def create(self, typeKey: str):
+        super().create(typeKey)
+=======
     def create(self, TypeKey: str):
+        """
+        Функция возвращает csv строку
+        """
         super().create(TypeKey)
 
+>>>>>>> c3fda05bbfb4918ad4df535ace3fbf54be41ab73
         result = ""
-        #Исходные данные
-        items = self.data[TypeKey]
+        delimetr = ";"
 
+<<<<<<< HEAD
+        # Исходные данные
+        items = self.data[ typeKey ]
+        if items == None:
+            raise operation_exception("Невозможно сформировать данные. Данные не заполнены!")
+        
+        if len(items) == 0:
+            raise operation_exception("Невозможно сформировать данные. Нет данных!")
+        
+        # Заголовок 
+        header = delimetr.join(self.fields)
+        result += f"{header}\n"
+        
+        # Данные
+=======
         #Список
         for field in self.fields:
             result += f"{field};"
@@ -19,36 +46,25 @@ class csv_reporting(reporting):
         return result 
     @staticmethod
     def __csv__create(fields, items):
+        """
+        Функция формирует csv строку
+        """
         result = ""
+>>>>>>> c3fda05bbfb4918ad4df535ace3fbf54be41ab73
         for item in items:
-            list = []
-            for field in fields:
-                getattr_name = getattr(item, field)
-                if isinstance(getattr_name, reference):
-                    list.append(getattr_name.name)
-                elif isinstance(getattr_name, str):
-                    if getattr_name != "":
-                        list.append(getattr_name)
-                    else:
-                        list.append(" ")
-                elif isinstance(getattr_name, int):
-                    list.append(str(getattr_name))
-                elif isinstance(getattr_name, bool):
-                    list.append(str(getattr_name))
-                elif  getattr_name is None:
-                    list.append(" ")
-            result += ';'.join(list) + "\n" 
-
+            row = ""
+            for field in self.fields:
+                value = getattr(item, field)
+                if value is None:
+                    value = ""
+                    
+                row +=f"{value}{delimetr}"
+                
+            result += f"{row[:-1]}\n"
+            
+        
+        # Результат csv
         return result
-                
-                    
-
-
-                    
-                
-                    
-
-
-                    
-
-
+        
+        
+        

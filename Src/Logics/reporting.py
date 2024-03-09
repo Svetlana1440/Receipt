@@ -1,21 +1,20 @@
 from abc import ABC
 from Src.settings import settings
 from Src.exceptions import exception_proxy, operation_exception
+from Src.reference import reference
 
 
 #
 # Абстрактный класс для реализации отчетности
 #
 class reporting(ABC):
-    # Настройки
-    __settings: settings = None
     # Набор данных
     __data = {}
     # Список полей
     __fields = []    
 
     
-    def __init__(self, _setting: settings, _data):
+    def __init__(self, _data):
         """
 
         Args:
@@ -23,11 +22,9 @@ class reporting(ABC):
             _data (_type_): Словарь с данными
         """
         
-        exception_proxy.validate(_setting, settings)
         exception_proxy.validate(_data, dict)
         
         self.__data = _data
-        self.__settings = _setting
         
 
  
@@ -64,7 +61,7 @@ class reporting(ABC):
             raise operation_exception("Набор данных пуст!")
         
         item = data[typeKey][0]
-        result = list(filter(lambda x: not x.startswith("_") and not x.startswith("create_")  , dir(item)))
+        result = list(filter(lambda x: not x.startswith("_") and not x.startswith("create_") , dir(item)))
        
         return result    
     
