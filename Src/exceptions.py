@@ -55,6 +55,8 @@ class exception_proxy(Exception):
 
         return True
      
+   
+         
      
 #
 # Исключение при проверки аргументов

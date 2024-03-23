@@ -7,7 +7,7 @@ class settings():
     _inn = 0
     _short_name = ""
     _first_start = True
-    _ReportFormat = ""
+    _mode = "csv"
     
     
     @property
@@ -49,20 +49,20 @@ class settings():
     @is_first_start.setter        
     def is_first_start(self, value: bool):
         self._first_start = value
-
-    @property    
-    def ReportFormat(self):
+        
+    @property
+    def report_mode(self):
         """
-           Флаг Первый старт
+            Режим построения отчетности
+        Returns:
+            _type_: _description_
         """
-        return self._ReportFormat 
-            
-    @ReportFormat.setter        
-    def ReportFormat(self, value: str):
+        return self._mode
+    
+    
+    @report_mode.setter
+    def report_mode(self, value: str):
         exception_proxy.validate(value, str)
-        if value.lower() in ("csv", "markdown", "json"):
-            self._ReportFormat = value
-        else:
-            raise Exception("Нет такого формата данных")
-
+        
+        self._mode = value
     
