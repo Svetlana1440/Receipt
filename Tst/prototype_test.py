@@ -28,6 +28,7 @@ class prototype_test(unittest.TestCase):
         # Проверка
         assert isinstance(result, storage_prototype)
         assert prototype.is_empty
+        assert len(result) > 0
 
 
     def test_check_prototype_nomenclature(self):
