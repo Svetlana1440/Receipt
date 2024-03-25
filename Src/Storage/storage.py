@@ -28,7 +28,7 @@ class storage:
         Returns:
             _type_: _description_
         """
-        return "nomenclature"
+        return "nomenclatures"
 
   
     @staticmethod
@@ -38,9 +38,18 @@ class storage:
         Returns:
             _type_: _description_
         """
-        return "group"
+        return "groups"
       
       
+    @staticmethod
+    def storage_transaction_key():
+        """
+            Список складских проводок
+        Returns:
+            _type_: _description_
+        """
+        return "transactions"  
+    
 
     @staticmethod  
     def unit_key():
@@ -49,23 +58,30 @@ class storage:
         Returns:
             _type_: _description_
         """
-        return "unit"
+        return "units"
     
     @staticmethod
     def receipt_key():
         """
-            Ключ для хранения рецептов
+            Список рецептов
         Returns:
             _type_: _description_
         """
-        return "receipt"
-    @staticmethod
-    def name_key():
-        """
-            Ключ для хранения имен
-        Returns:
-            _type_: _description_
-        """
-        return "name"
+        return "receipts"
     
+    # Код взят: https://github.com/UpTechCompany/GitExample/blob/6665bc70c4933da12f07c0a0d7a4fc638c157c40/storage/storage.py#L30
+    
+    @staticmethod
+    def storage_keys(cls):
+        """
+            Получить список ключей
+        Returns:
+            _type_: _description_
+        """
+        keys = []
+        methods = [getattr(cls, method) for method in dir(cls) if callable(getattr(cls, method))]
+        for method in methods:
+            if method.__name__.endswith("_key") and callable(method):
+                keys.append(method())
+        return keys
     
