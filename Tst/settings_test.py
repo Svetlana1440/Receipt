@@ -1,6 +1,5 @@
 from Src.settings_manager import settings_manager 
 import unittest
-
 #
 # Набор автотестов для проверки работы модуmeля настроек
 #

@@ -7,7 +7,6 @@ from Src.Logics.start_factory import start_factory
 from datetime import datetime
 from Src.Logics.storage_service import storage_service
 from Src.Models.nomenclature_model import nomenclature_model
-
 from Src.Logics.nomenclature_service import nomenclature_service
 
 app = Flask(__name__)

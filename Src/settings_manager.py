@@ -1,7 +1,6 @@
 import os
 import json
 import uuid
-
 from Src.settings import settings
 from Src.errors import error_proxy
 from Src.exceptions import exception_proxy

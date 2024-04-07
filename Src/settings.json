@@ -4,6 +4,8 @@
    "is_first_start": true,
    "report_mode":"json"
 }
+
+{ 
 "block_period": "1988-11-09",
 "inn": 3800020344,
 "is_first_start": false,

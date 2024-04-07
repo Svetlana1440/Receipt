@@ -1,9 +1,7 @@
 from Src.exceptions import exception_proxy
-
 from datetime import datetime
 #
 # Класс для описания настроек
-
 class settings():
     _inn = 0
     _short_name = ""

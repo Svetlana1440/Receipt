@@ -7,7 +7,6 @@ from Src.Models.receipe_model import receipe_model
 from Src.Models.storage_model import storage_model
 from Src.Models.receipe_row_model import receipe_row_model
 from Src.Storage.storage import storage
-
 from datetime import datetime
 import json
 
