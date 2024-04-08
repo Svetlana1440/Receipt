@@ -7,11 +7,7 @@ from Src.Logics.start_factory import start_factory
 from datetime import datetime
 from Src.Logics.storage_service import storage_service
 from Src.Models.nomenclature_model import nomenclature_model
-
-<<<<<<< Updated upstream
 from Src.Logics.nomenclature_service import nomenclature_service
-=======
->>>>>>> Stashed changes
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -94,5 +90,29 @@ def get_turns_nomenclature(nomenclature_id):
     result = storage_service.create_response( data, app )
     return result      
 
+@app.route("/api/settings_manager/<block_period>", methods = ["GET"])
+def change_block_period(block_period):
+    
+    options = settings_manager()
+    
+    if(block_period != "" or block_period != None):
+        options.settings.block_period = block_period
+        options.data['block_period']= block_period
+        options.save()
+    
+    data = options.data
+    result = storage_service.create_response(data, app)
+    return result
+
+@app.route("/api/settings_manager", methods = ["GET"])
+def get_block_period():
+    
+    options = settings_manager()
+    data = options.data
+    result = storage_service.create_response(data, app)
+    return result
+
+
+    
 if __name__ == "__main__":
     app.run(debug = True)
