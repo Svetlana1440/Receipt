@@ -1,10 +1,17 @@
 from Src.settings_manager import settings_manager 
 import unittest
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 #
 # Набор автотестов для проверки работы модуmeля настроек
 #
 class settings_test(unittest.TestCase):
+    
+ 
+    
     #
     # Проверить на корректность создания и загрузки файла с настройками
     #

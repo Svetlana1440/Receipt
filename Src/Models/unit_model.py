@@ -1,5 +1,5 @@
 from Src.reference import reference
-from Src.exceptions import exception_proxy, argument_exception
+from Src.exceptions import exception_proxy, argument_exception, operation_exception
 
 
 
@@ -14,7 +14,7 @@ class unit_model(reference):
     # Коэффициент пересчета к базовой единице измерения
     __coefficient: int = 1
     
-    def __init__(self, name: str, base: reference = None, coeff: int = 1 ):
+    def __init__(self, name: str = None, base: reference = None, coeff: int = 1 ):
         super().__init__(name)
         
         if base != None:
@@ -41,7 +41,7 @@ class unit_model(reference):
         
     
     @property    
-    def coefficient(self):
+    def coefficient(self) -> int:
         """
             Коэффициент пересчета
         Returns:
@@ -57,6 +57,27 @@ class unit_model(reference):
             raise argument_exception("Значение коэффициента должно быть > 1!")
         
         self.__coefficient = value  
+        
+    def load(self, source: dict):
+        """
+            Загрузить данные
+        Args:
+            source (dict): исходный словарь
+
+        """
+        super().load(source)
+        if source is None:
+            return None
+        
+        source_fields = ["coefficient", "base_unit"]
+        if set(source_fields).issubset(list(source.keys())) == False:
+            raise operation_exception(f"Невозможно загрузить данные в объект {source}!")
+        
+        self.__coefficient = source["coefficient"]
+        self.__base_unit = unit_model().load(source["base_unit"])
+            
+        return self    
+             
         
         
     # Фабричные методы    
@@ -110,6 +131,26 @@ class unit_model(reference):
         item = unit_model("литр", base, 1000)
         return item
     
+    
+    @staticmethod
+    def get(unit_name: str, units: dict):
+        """
+            Получить значение элемента единицы измерения из словаря
+        Args:
+            nomenclature_name (str): наименование
+            nomenclatures (dict): исходный словарь storage.data
+
+        Returns:
+            nomenclature_model: _description_
+        """
+        exception_proxy.validate(unit_name, str)
+        
+        keys = list(filter(lambda x: x == unit_name, units.keys() ))
+        if len(keys) == 0:
+            raise operation_exception(f"Некоректно передан список. Не найдена номенклатура {unit_name}!")
+                
+        return units[keys[0]]
+  
     
 
         

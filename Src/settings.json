@@ -1,12 +1,15 @@
 {
    "inn":3800020344,
    "short_name":"ООО Ромашка",
-   "is_first_start": true,
+   "is_first_start": false,
    "report_mode":"json"
 }
+<<<<<<< Updated upstream
 "block_period": "1988-11-09",
 "inn": 3800020344,
 "is_first_start": false,
 "report_mode": "json",
 "short_name": "ООО Ромашка"
 }
+=======
+>>>>>>> Stashed changes

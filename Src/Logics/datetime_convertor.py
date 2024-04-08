@@ -9,7 +9,7 @@ class datetime_convertor(convertor):
     
     def serialize(self, field: str,  object):
         """
-            Подготовить словарь 
+            Сериализовать в словарь
         Args:
             field (str): поле
             object (_type_): значение

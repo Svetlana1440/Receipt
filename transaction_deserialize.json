@@ -1,0 +1,58 @@
+{
+    "description": "",
+    "id": "a66dd566f8764eee9ca29f6dc5245eb1",
+    "is_error": false,
+    "name": "sample_credit_transaction",
+    "nomenclature": {
+        "description": "",
+        "group": {
+            "description": "",
+            "id": "18277c4705764bf0893dbd49f2930c34",
+            "is_error": false,
+            "name": "\u0418\u043d\u0433\u0440\u0435\u0434\u0438\u0435\u043d\u0442\u044b"
+        },
+        "id": "5c16c9c869c944ca81571f6cf70a790d",
+        "is_error": false,
+        "name": "\u041c\u0443\u043a\u0430 \u043f\u0448\u0435\u043d\u0438\u0447\u043d\u0430\u044f",
+        "unit": {
+            "base_unit": {
+                "base_unit": null,
+                "coefficient": 1,
+                "description": "",
+                "id": "5f73f137f82f4d7eb2d529a83b54b982",
+                "is_error": false,
+                "name": "\u0433\u0440\u0430\u043c\u043c"
+            },
+            "coefficient": 1000,
+            "description": "",
+            "id": "1bed8c4830a64ab987692730fb43e84c",
+            "is_error": false,
+            "name": "\u043a\u0438\u043b\u043b\u043e\u0433\u0440\u0430\u043c\u043c"
+        }
+    },
+    "period": "2024-01-27",
+    "storage": {
+        "address": "\u0433. \u041c\u043e\u0441\u043a\u0432\u0430. \u0443\u043b. \u0410\u043a\u0430\u0434\u0435\u043c\u0438\u043a\u0430 \u041a\u043e\u0440\u043e\u043b\u0435\u0432\u0430, 10",
+        "description": "",
+        "id": "1fbbced64e3e474eb27e0f464161c61b",
+        "is_error": false,
+        "name": "default"
+    },
+    "storage_type": true,
+    "unit": {
+        "base_unit": {
+            "base_unit": null,
+            "coefficient": 1,
+            "description": "",
+            "id": "d8e5cf980f724a0b97b6a5ef65af6b1b",
+            "is_error": false,
+            "name": "\u0433\u0440\u0430\u043c\u043c"
+        },
+        "coefficient": 1000,
+        "description": "",
+        "id": "51fa5f0d487d4989bc4439e025a42255",
+        "is_error": false,
+        "name": "\u043a\u0438\u043b\u043b\u043e\u0433\u0440\u0430\u043c\u043c"
+    },
+    "value": 1
+}

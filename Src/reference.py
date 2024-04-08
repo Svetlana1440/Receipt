@@ -1,7 +1,7 @@
 import uuid
 from abc import ABC
 from Src.errors import error_proxy
-from Src.exceptions import exception_proxy, argument_exception
+from Src.exceptions import exception_proxy, argument_exception, operation_exception
 
 #
 # Абстрактный класс для наследования
@@ -16,9 +16,9 @@ class reference(ABC):
     " Информация об ошибке "
     _error = error_proxy()
     
-    def __init__(self, name):
+    def __init__(self, name = None):
         self._id = uuid.uuid4()
-        self.name = name
+        self._name = name
     
     @property
     def name(self):
@@ -51,6 +51,29 @@ class reference(ABC):
     def is_error(self):
         " Флаг. Есть ошибка "
         return self._error.error != ""  
+    
+    def load(self, source: dict):
+        """
+            Десериализовать свойства 
+        Args:
+            source (dict): исходный слова
+        """
+        if source is None:
+            return None
+        
+        if len(source) == 0:
+            raise argument_exception("Некорректно переданы параметры!")
+        
+        source_fields = ["id", "name", "description"]
+        if set(source_fields).issubset(list(source.keys())) == False:
+            raise operation_exception(f"Невозможно загрузить данные в объект. {source}!")
+        
+        self._id = uuid.UUID(  source["id"]) 
+        self._name = source["name"]
+        self._description = source["description"]
+        
+        return self
+        
     
     @staticmethod
     def create_dictionary(items: list):

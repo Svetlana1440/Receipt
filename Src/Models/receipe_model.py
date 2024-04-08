@@ -1,6 +1,7 @@
 from Src.reference import reference
 from Src.Models.receipe_row_model import receipe_row_model
 from Src.exceptions import exception_proxy , operation_exception, argument_exception
+from Src.Models.nomenclature_model import nomenclature_model
 
 #
 # Класс описание рецепта приготовления блюда
@@ -21,11 +22,12 @@ class receipe_model(reference):
     # Описание
     _comments: str = ""
     
-    def  rows_ids(self):
-        result = []
-        for item in self._rows:
-            result.append(item.value.id)
-    
+    def __init__(self, name = None):
+        super().__init__(name)
+        self._rows = {}
+        self._instructions = []
+        self._brutto = 0
+            
     def add(self, row: receipe_row_model):
         """
             Добавить/ изменить состав блюда
@@ -59,7 +61,7 @@ class receipe_model(reference):
             self._brutto += self._rows[position].size 
             
     @property     
-    def brutto(self):
+    def brutto(self) -> int:
         """
             Вес брутто
         Returns:
@@ -68,7 +70,7 @@ class receipe_model(reference):
         return self._brutto
     
     @brutto.setter
-    def brutto(self, value: int) -> int:
+    def brutto(self, value: int):
         exception_proxy.validate(value, int)
         self._brutto = value     
             
@@ -88,7 +90,7 @@ class receipe_model(reference):
         self._netto = value
         
     @property    
-    def instructions(self):
+    def instructions(self) -> list:
         """
            Инструкции для приготовления
         Returns:
@@ -97,7 +99,7 @@ class receipe_model(reference):
         return self._instructions  
     
     @property
-    def comments(self):
+    def comments(self) -> str:
         return self._comments
     
       
@@ -120,6 +122,48 @@ class receipe_model(reference):
         """
         return self._rows    
     
+    def rows(self) -> list:
+        """
+            Получить состав рецепта (read only)
+        Returns:
+            _type_: _description_
+        """
+        result = []
+        for key in self._rows.keys():
+            result.append( self._rows[key] )
+            
+        return result
+    
+    def load(self,  source: dict):
+        """
+            Загрузить данные из словаря
+        Args:
+            source (dict): исходный словарь
+
+        """
+        super().load(source)
+        if source is None:
+            return None
+        
+        source_fields = ["comments", "consist", "instructions","netto", "brutto"]
+        if set(source_fields).issubset(list(source.keys())) == False:
+            raise operation_exception(f"Невозможно загрузить данные в объект {source}!")
+        
+        self._netto = source["netto"]
+        self._brutto = source["brutto"]
+        
+        # Загрузим состав
+        for item in source["consist"].items():
+            row = item[1]
+            if row is not None:
+                value = receipe_row_model().load(row)
+                self.add(value)
+            
+        # Загрузим инструкции
+        self._instructions = source["instructions"]
+        return self
+            
+    
     
     @staticmethod
     def create_receipt(name: str, comments: str, items: list, data: list):
@@ -130,9 +174,6 @@ class receipe_model(reference):
             comments (str): Приготовление
             items (list): Состав рецепта
             data (list): Список номенклатуры
-        Raises:
-            operation_exception: _description_
-            operation_exception: _description_
 
         Returns:
             receipe_model: _description_
@@ -144,28 +185,18 @@ class receipe_model(reference):
         
         # Подготовим словарь со списком номенклатуры
         nomenclatures = reference.create_dictionary(data)    
-                
         receipt = receipe_model(name)
+        if comments != "":
+            receipt.comments = comments    
         
         for position in items:
-            # Получаем список кортежей и берем первое значение
-            _list =  list(position.items())
-            if len(_list) < 1:
+            
+            if len(position) < 2:
                 raise operation_exception("Невозможно сформировать элементы рецепта! Некорректный список исходных элементов!")
             
-            tuple = list(_list)[0]
-            if len(tuple) < 2:
-                raise operation_exception("Невозможно сформировать элемент рецепта. Длина кортежа не корректна!")
-            
-            nomenclature_name = tuple[0]
-            size = tuple[1]
-            
-            # Определеяем номенклатура
-            keys = list(filter(lambda x: x == nomenclature_name, nomenclatures.keys() ))
-            if len(keys) == 0:
-                raise operation_exception(f"Некоректно передан список. Не найдена номенклатура {nomenclature_name}!")
-            
-            nomenclature = nomenclatures[nomenclature_name]
+            nomenclature_name = position[0]
+            size = position[1]            
+            nomenclature = nomenclature_model.get( nomenclature_name, nomenclatures )
             
             # Определяем единицу измерения
             if nomenclature.unit.base_unit is None:
@@ -174,7 +205,10 @@ class receipe_model(reference):
                 unit = nomenclature.unit.base_unit    
             
             # Создаем запись в рецепте
-            row = receipe_row_model(nomenclature, size, unit)
+            row = receipe_row_model()
+            row.nomenclature = nomenclature
+            row.size = size
+            row.unit = unit
             receipt.add(row)
         
         return receipt

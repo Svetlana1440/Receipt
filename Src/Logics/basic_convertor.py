@@ -25,4 +25,3 @@ class basic_convertor(convertor):
             
       return None        
         
-    

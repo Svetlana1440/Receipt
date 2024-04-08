@@ -9,7 +9,7 @@ from Src.exceptions import exception_proxy
 
 #
 # Менеджер настроек
-   
+#   
 class settings_manager(object):
     # Наименование файла по умолчанию
     _settings_file_name = "settings.json"

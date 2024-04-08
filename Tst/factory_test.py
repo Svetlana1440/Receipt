@@ -106,20 +106,15 @@ class factory_test(unittest.TestCase):
         
         
         # Действие
-        result = factory.create()
-        
+        factory.create()
         
         # Проверка
-        if manager.settings.is_first_start == True:
-            assert result == True
-            assert not factory.storage is None
-            assert storage.nomenclature_key() in factory.storage.data
-            assert storage.receipt_key() in factory.storage.data
-            assert storage.group_key() in factory.storage.data
-            assert storage.unit_key() in factory.storage.data
-            assert storage.storage_transaction_key() in factory.storage.data
-        else:
-            assert result == False    
+        assert not factory.storage is None
+        assert storage.nomenclature_key() in factory.storage.data
+        assert storage.receipt_key() in factory.storage.data
+        assert storage.group_key() in factory.storage.data
+        assert storage.unit_key() in factory.storage.data
+        assert storage.storage_transaction_key() in factory.storage.data
         
                      
         
