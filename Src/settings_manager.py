@@ -4,8 +4,8 @@ import uuid
 
 from Src.settings import settings
 from Src.errors import error_proxy
-from Src.exceptions import exception_proxy
-
+from Src.exceptions import exception_proxy, operation_exception
+from Src.Logics import convert_factory
 
 #
 # Менеджер настроек
@@ -48,7 +48,7 @@ class settings_manager(object):
             self._error.set_error( Exception("ERROR: Невозможно загрузить настройки! Не найден файл %s", settings_file))
 
         try:
-            with open(settings_file, "r") as read_file:
+            with open(settings_file, "r", encoding = 'utf8') as read_file:
                 self._data = json.load(read_file)     
         except:
             self._error.set_error( Exception("ERROR: Невозможно загрузить настройки! Не найден файл %s", settings_file))     
@@ -87,7 +87,23 @@ class settings_manager(object):
                 if not isinstance(value, list) and not isinstance(value, dict):
                     setattr(self._settings, field, value)
                 
-        
+    def save(self):
+        """
+            Сохранить данные в хранилище
+        Raises:
+            operation_exception: _description_
+        """
+        try:
+            file_path = os.path.split(__file__)
+            settings_file = "%s/%s" % (file_path[0], self._settings_file_name)
+            with open(settings_file, "w", encoding = 'utf8') as write_file:
+                json_text = json.dumps(self._data, sort_keys = True, indent = 4, ensure_ascii = False)  
+                write_file.write(json_text)
+                return True
+        except Exception as ex:
+            raise operation_exception(f"Ошибка при записи файла {self._settings_file_name}\n{ex}")
+            
+        return False   
     
     @property    
     def settings(self) -> settings:
