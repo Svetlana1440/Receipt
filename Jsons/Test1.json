@@ -1,0 +1,12 @@
+{
+    "is_first_start":"False",
+    "block_period":"2024-1-1 12:00:0000",
+    "first_name":"V A ",
+    "INN":"1 234 56 78 9012   ",
+    "account":"    123 45 678 901",
+    "correspond_account":"109 876 5 3210     ", 
+    "BIK":"1 23 4 56 789      ", 
+    "name":"Name example",
+    "property_type":"'OOO'",
+    "report_type":"Json"
+}
