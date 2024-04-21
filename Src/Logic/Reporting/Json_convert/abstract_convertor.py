@@ -4,7 +4,7 @@ import sys
 
 sys.path.append(Path(__file__).parent.parent.parent)
 
-from src.exceptions import argument_exception
+from exceptions import argument_exception
 from abc import ABC
 
 class abstract_convertor(ABC):

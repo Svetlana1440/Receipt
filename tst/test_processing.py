@@ -2,13 +2,13 @@ from pathlib import Path
 import os
 import sys
 
-sys.path.append(os.path.join(Path(__file__).parent.parent,'src'))
+sys.path.append(os.path.join(Path(__file__).parent.parent,'Src'))
 
 from settings_manager import settings_manager
-from storage.storage import storage
+from Storage.storage import storage
 from Logic.start_factory import start_factory
 from datetime import datetime
-from src.Logic.process_factory import process_factory
+from Logic.process_factory import process_factory
 
 import unittest
 

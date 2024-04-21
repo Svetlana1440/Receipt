@@ -4,8 +4,8 @@ import sys
 
 sys.path.append(Path(__file__).parent.parent.parent)
 
-from src.exceptions import argument_exception
-from src.Logic.Reporting.Json_convert.abstract_convertor import abstract_convertor
+from exceptions import argument_exception
+from Logic.Reporting.Json_convert.abstract_convertor import abstract_convertor
 
 class date_time_conventor(abstract_convertor):
 

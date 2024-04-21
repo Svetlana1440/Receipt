@@ -1,31 +1,30 @@
 from exceptions import argument_exception, operation_exception
 from datetime import datetime
+from Logic.storage_observer import storage_observer
+from Models.event_type import event_type
+
 
 class settings:
     __first_name = ""
-    __first_start=True
-
-    __block_period=datetime(1,1,1)
-    __INN=""
-    __account=""
-    __correspond_account=""
-    __BIK=""
-    __name=""
-    __property_type=""
-    __report_type=""
-    __Report_format={"CSV":"","Markdown":"","Json":""}
-
+    __first_start = True
+    __block_period = datetime(1, 1, 1)
+    __INN = ""
+    __account = ""
+    __correspond_account = ""
+    __BIK = ""
+    __name = ""
+    __property_type = ""
+    __report_type = ""
+    __Report_format = {"CSV": "", "Markdown": "", "Json": ""}
 
     @property
     def Report_format(self):
         return self.__Report_format
 
-
-
     @property
     def first_name(self):
         return self.__first_name
-    
+
     @first_name.setter
     def first_name(self, value: str):
         """
@@ -38,15 +37,13 @@ class settings:
         """
         if not isinstance(value, str):
             raise argument_exception("Некорректный аргумент!")
-        
+
         self.__first_name = value.strip()
 
-
-    
     @property
     def report_type(self):
         return self.__report_type
-    
+
     @report_type.setter
     def report_type(self, value: str):
         """
@@ -59,159 +56,128 @@ class settings:
         """
         if not isinstance(value, str):
             raise argument_exception("Некорректный аргумент!")
-        
-        self.__report_type = value.strip()
-    
-    
 
-    #объявления
+        self.__report_type = value.strip()
+
+    # объявления
+
     @property
     def INN(self):
         return self.__INN
-    
+
     @property
     def account(self):
         return self.__account
-    
+
     @property
     def correspond_account(self):
         return self.__correspond_account
-    
+
     @property
     def BIK(self):
         return self.__BIK
-    
+
     @property
     def name(self):
         return self.__name
-    
-    @property 
+
+    @property
     def property_type(self):
         return self.__property_type
-    
+
     @property
     def block_period(self):
         return self.__block_period
 
-    #вывод CSV
+    # вывод CSV
     @property
     def Report_CSV(self):
         return self.__Report_format['CSV']
-    
+
     @property
     def Report_Markdown(self):
         return self.__Report_format['Markdown']
-    
+
     @property
     def Report_Json(self):
         return self.__Report_format['Json']
 
+    # Сеттеры
 
-    #Сеттеры
     @INN.setter
-    def INN(self,value: str):
-        #value_stripped=value.replace(' ','')
-        value_stripped=value.strip().replace(' ','')
-        #Состоит ли из символов (value у нас str на случай незначащих нулей в начале числа)
-        if not isinstance(value,str) or not(value_stripped.isdigit()):
-            raise  argument_exception("Некорректный аргумент")
-        
-
-        #проверка на длинну
-        if len(value_stripped)!=12:
+    def INN(self, value: str):
+        value_stripped = value.strip().replace(' ', '')
+        if not isinstance(value, str) or not (value_stripped.isdigit()):
+            raise argument_exception("Некорректный аргумент")
+        if len(value_stripped) != 12:
             raise argument_exception("Некорректная длинна")
-            
-        self.__INN=value_stripped
+
+        self.__INN = value_stripped
 
     @account.setter
-    def account(self,value:str):
-        #делаем через replace на случай введения с пробелами
-        value_stripped=value.strip().replace(' ','')
-        #Состоит ли из символов (value у нас str на случай незначащих нулей в начале числа)
-        if not isinstance(value,str) or not(value_stripped.isdigit()):
-            raise  argument_exception("Некорректный аргумент")
-        
+    def account(self, value: str):
+        value_stripped = value.strip().replace(' ', '')
 
-        #проверка на длинну
-        if len(value_stripped)!=11:
+        if not isinstance(value, str) or not (value_stripped.isdigit()):
+            raise argument_exception("Некорректный аргумент")
+        if len(value_stripped) != 11:
             raise argument_exception("Некорректная длинна")
-            
-        self.__account=value_stripped
 
+        self.__account = value_stripped
 
     @correspond_account.setter
-    def correspond_account(self,value:str):
-        #делаем через replace на случай введения с пробелами
-        value_stripped=value.strip().replace(' ','')
-        #Состоит ли из символов (value у нас str на случай незначащих нулей в начале числа)
-        if not isinstance(value,str) or not(value_stripped.isdigit()):
-            raise  argument_exception("Некорректный аргумент")
-        
-
-        #проверка на длинну
-        if len(value_stripped)!=11:
+    def correspond_account(self, value: str):
+        value_stripped = value.strip().replace(' ', '')
+        if not isinstance(value, str) or not (value_stripped.isdigit()):
+            raise argument_exception("Некорректный аргумент")
+        if len(value_stripped) != 11:
             raise argument_exception("Некорректная длинна")
-            
-        self.__correspond_account=value_stripped
+
+        self.__correspond_account = value_stripped
 
     @BIK.setter
-    def BIK(self,value:str):
-        value_stripped=value.strip().replace(' ','')
-        #Состоит ли из символов (value у нас str на случай незначащих нулей в начале числа)
-        if not isinstance(value,str) or not(value_stripped.isdigit()):
-            raise  argument_exception("Некорректный аргумент")
-        
+    def BIK(self, value: str):
+        value_stripped = value.strip().replace(' ', '')
 
-        #проверка на длинну
-        if len(value_stripped)!=9:
+        if not isinstance(value, str) or not (value_stripped.isdigit()):
+            raise argument_exception("Некорректный аргумент")
+        if len(value_stripped) != 9:
             raise argument_exception("Некорректная длинна")
-            
-        self.__BIK=value_stripped
+
+        self.__BIK = value_stripped
 
     @name.setter
-    def name(self,value:str):
-        #берем first name
+    def name(self, value: str):
         if not isinstance(value, str):
             raise argument_exception("Некорректный аргумент!")
-        
+
         self.__name = value.strip()
 
     @property_type.setter
-    def property_type(self,value:str):
-        value_stripped=value.strip()
-        if not isinstance(value,str):
-            raise  argument_exception("Некорректный аргумент")
-        
-
-        #проверка на длинну
-        if len(value_stripped)!=5:
+    def property_type(self, value: str):
+        value_stripped = value.strip()
+        if not isinstance(value, str):
+            raise argument_exception("Некорректный аргумент")
+        if len(value_stripped) != 5:
             raise argument_exception("Некорректная длинна")
-            
-        self.__property_type=value_stripped
+
+        self.__property_type = value_stripped
 
     @block_period.setter
-    def block_period(self,value:str):
-        if not isinstance(value,str):
-            raise  argument_exception("Некорректный аргумент")
-        
-        #проверка на указание даты со временем
-        value=value.split(' ')[0]
+    def block_period(self, value: str):
+        if not isinstance(value, str):
+            raise argument_exception("Некорректный аргумент")
 
-        self.__block_period=datetime.strptime(value, "%Y-%m-%d")
-
-
-
-
+        value = value.split(' ')[0]
+        self.__block_period = datetime.strptime(value, "%Y-%m-%d")
 
     @property
     def is_first_start(self):
         return self.__first_start
 
     @is_first_start.setter
-    def is_first_start(self,value):
-        if not isinstance(value,str) and not isinstance(value,bool):
+    def is_first_start(self, value):
+        if not isinstance(value, str) and not isinstance(value, bool):
             raise argument_exception("wrong argument")
-        
-        print(str(value).lower()=='true',value)
 
-        self.__first_start=(str(value).lower()=='true')
+        self.__first_start = (str(value).lower() == 'true')

@@ -4,10 +4,10 @@ from datetime import datetime
 
 sys.path.append(Path(__file__).parent.parent.parent)
 
-from src.exceptions import argument_exception
-from src.Logic.Reporting.Json_convert.abstract_convertor import abstract_convertor
-from src.Logic.Reporting.Json_convert.basic_conventor import basic_conventor
-from src.Logic.Reporting.Json_convert.date_time_convertor import date_time_conventor
+from exceptions import argument_exception
+from Logic.Reporting.Json_convert.abstract_convertor import abstract_convertor
+from Logic.Reporting.Json_convert.basic_conventor import basic_conventor
+from Logic.Reporting.Json_convert.date_time_convertor import date_time_conventor
 
 class reference_conventor(abstract_convertor):
     

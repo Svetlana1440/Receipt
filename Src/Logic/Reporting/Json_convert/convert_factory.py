@@ -6,8 +6,8 @@ sys.path.append(Path(__file__).parent.parent)
 
 
 
-from src.Logic.Reporting.Json_convert.reference_conventor import reference_conventor
-from src.exceptions import argument_exception
+from Logic.Reporting.Json_convert.reference_conventor import reference_conventor
+from exceptions import argument_exception
 
 class convert_factory:
     __conventor=None    

@@ -1,4 +1,4 @@
-from src.error_proxy import error_proxy
+from error_proxy import error_proxy
 
 
 class argument_exception:
