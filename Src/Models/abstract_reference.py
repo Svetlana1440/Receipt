@@ -3,7 +3,6 @@ from error_proxy import error_proxy
 from abc import ABC
 import uuid
 from pathlib import Path
-import os
 import sys
 
 sys.path.append(Path(__file__).parent.parent)

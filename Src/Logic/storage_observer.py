@@ -1,4 +1,3 @@
-from Models.event_type import event_type
 from exceptions import argument_exception
 
 

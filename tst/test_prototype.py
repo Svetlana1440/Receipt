@@ -1,6 +1,5 @@
 import unittest
 from Logic.storage_prototype import storage_prototype
-from Logic.process_factory import process_factory
 from datetime import datetime
 from Logic.start_factory import start_factory
 from Storage.storage import storage

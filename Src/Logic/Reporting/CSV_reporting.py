@@ -1,8 +1,6 @@
 from Logic.Reporting.Abstract_reporting import abstract_reporting
 from pathlib import Path
-import os
 import sys
-from settings import settings
 sys.path.append(Path(__file__).parent.parent)
 
 

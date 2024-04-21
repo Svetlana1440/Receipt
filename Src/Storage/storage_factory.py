@@ -1,5 +1,3 @@
-
-from exceptions import argument_exception
 from Models.nomenclature_model import nomenclature_model
 from Models.range_model import range_model
 from Storage.storage_journal_transaction import storage_journal_transaction
