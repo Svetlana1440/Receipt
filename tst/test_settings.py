@@ -4,8 +4,13 @@ from settings import settings
 from pathlib import Path
 import os
 import sys
-import json
 from datetime import datetime
+from datetime import datetime
+from Storage.storage import storage
+from Logic.start_factory import start_factory
+from Logic.Services.storage_sevice import storage_service
+from Logic.storage_observer import storage_observer
+from Models.event_type import event_type
 
 sys.path.append(os.path.join(Path(__file__).parent.parent, 'Src'))
 
@@ -178,3 +183,20 @@ class test_settings(unittest.TestCase):
 
         # проверка
         assert dic == True
+
+
+    def test_check_observer_event(self):
+        #Подготовка
+        unit=settings_manager()
+        address=os.path.join(Path(__file__).parent.parent,'Jsons')
+        unit.open('Tester.json',address)
+        factory=start_factory(unit.settings)
+        factory.create()
+        key=storage.b_turn_key()
+        transactions_data_control = factory.storage.data[ key ]
+
+        #действие         
+        unit.settings.block_period="2024-5-5"
+        transactions_data = factory.storage.data[ key ]
+
+        assert len(transactions_data_control)!=len(transactions_data)

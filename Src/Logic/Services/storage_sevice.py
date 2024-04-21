@@ -17,6 +17,8 @@ from Storage.storage import storage
 from error_proxy import error_proxy
 from pathlib import Path
 from datetime import datetime
+from Logic.storage_observer import storage_observer
+from Models.event_type import event_type
 import os
 import json
 import uuid
@@ -34,6 +36,7 @@ class storage_service(abstract_sevice):
         if len(data) == 0:
             raise argument_exception("неверный аргумент")
         self.__data = data
+        storage_observer.observers.append(self)
 
     def handle_event(self, handle_type: str):
         super().handle_event(handle_type)
@@ -67,14 +70,14 @@ class storage_service(abstract_sevice):
         return base_turns
 
     def create_blocked_turns(self) -> dict:
-        prototype = storage_prototype(self.__data)
+        prototype=storage_prototype(storage().data[storage.journal_key()])
         transactions = prototype.filter_date(
             datetime(1999, 1, 1), self.__options.block_period)
 
         proces = process_factory()
         data = proces.create(storage.process_turn_key(), transactions.data)
 
-        storage().data[storage.b_turn_key()]=data
+        storage().data[storage.b_turn_key()] = data
         self.__blocked = data
         return data
 

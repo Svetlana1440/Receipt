@@ -3,7 +3,6 @@ from datetime import datetime
 from Logic.storage_observer import storage_observer
 from Models.event_type import event_type
 
-
 class settings:
     __first_name = ""
     __first_start = True
@@ -168,8 +167,15 @@ class settings:
         if not isinstance(value, str):
             raise argument_exception("Некорректный аргумент")
 
-        value = value.split(' ')[0]
-        self.__block_period = datetime.strptime(value, "%Y-%m-%d")
+        try:
+            value=value.split(' ')[0]
+            legacy=self.__block_period
+            self.__block_period=datetime.strptime(value, "%Y-%m-%d")
+            if legacy!=self.__block_period:
+                storage_observer.raise_event(event_type.changed_block_period())
+
+        except Exception as ex:
+            raise operation_exception(f'неудалось сконвертировать дату {ex}')
 
     @property
     def is_first_start(self):

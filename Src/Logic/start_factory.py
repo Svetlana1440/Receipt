@@ -1,5 +1,6 @@
 from Models.nomenclature_model import nomenclature_model, nomenclature_group_model, range_model
 import json
+from Logic.Services.post_processing_service import post_processing_service
 from error_proxy import error_proxy
 from settings import settings
 from Storage.storage_model import storage_model
@@ -19,6 +20,7 @@ sys.path.append(os.path.join(Path(__file__).parent.parent, 'Models'))
 
 
 class start_factory:
+    __observer:post_processing_service=None
     __options: settings = None
     __storage: storage = None
     __storage_path = Path(__file__).parent.parent/'Storage'/'saved_models'
@@ -52,10 +54,11 @@ class start_factory:
         self.__storage.data[storage.unit_key()] = nom[1]
         self.__storage.data[storage.group_key()] = nom[2]
         self.__storage.data[storage.reciepe_key()] = nom[3]
+        self.__storage.data[storage.journal_key()]=nom[4]
 
         serv = storage_service(nom[4])
         serv.options = self.__options
-        self.__storage.data[storage.b_turn_key()] = serv.create_blocked_turns()
+        serv.create_blocked_turns()
 
         # сохраняем
         self.__save()
