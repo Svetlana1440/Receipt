@@ -2,7 +2,6 @@ from exceptions import argument_exception, operation_exception
 from Models.abstract_reference import abstract_reference
 from Models.range_model import range_model
 from pathlib import Path
-import os
 import sys
 import uuid
 
@@ -106,7 +105,7 @@ class reciepe_model(abstract_reference):
             amount = list(data["ingridient_proportions"][cur_key].keys())
 
             ran_mod = list(data["ingridient_proportions"][cur_key].values())[0]
-            
+
             tmp_rm = range_model._load(ran_mod)
             res.ingrident_proportions[cur_key] = {amount[0]: tmp_rm}
 

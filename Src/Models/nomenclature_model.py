@@ -3,7 +3,6 @@ from Models.range_model import range_model
 from Models.nomenclature_group_model import nomenclature_group_model
 from Models.abstract_reference import abstract_reference
 from pathlib import Path
-import os
 import sys
 import uuid
 

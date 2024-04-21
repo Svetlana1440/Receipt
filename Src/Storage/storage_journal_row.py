@@ -3,8 +3,6 @@ from uuid import UUID
 from datetime import datetime
 from Models.nomenclature_model import nomenclature_model
 from exceptions import argument_exception
-from Storage.storage_journal_transaction import storage_journal_transaction
-from Storage.storage_model import storage_model
 
 
 class storage_journal_row:

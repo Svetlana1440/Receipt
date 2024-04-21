@@ -1,4 +1,3 @@
-
 from Models.abstract_reference import abstract_reference
 import uuid
 from exceptions import argument_exception, operation_exception

@@ -2,7 +2,6 @@ from exceptions import argument_exception, operation_exception
 from datetime import datetime
 from Models.abstract_reference import abstract_reference
 from pathlib import Path
-import os
 import sys
 import uuid
 

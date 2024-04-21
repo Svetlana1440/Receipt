@@ -2,7 +2,6 @@ from exceptions import argument_exception
 from Storage.storage_journal_row import storage_journal_row
 from Storage.storage import storage
 from Storage.storage_factory import storage_factory
-from datetime import datetime
 
 
 class process_factory:
